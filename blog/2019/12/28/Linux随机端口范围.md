@@ -13,13 +13,29 @@
 1. 从操作系统一个随机端口
 2. `bind`一个本地端口
 
+而`A`获得的随机端口正好是`hbase`需要的端口, 哈哈.  (当时`hbase`没有启动, 端口为空闲)
+
+## 临时解决方法
+
+先停掉`A`,释放端口. 然后启动`Hbase`. 然后启动`A`. 搞定
+
+## 思考
+
+系统分配的随机端口范围是什么. 如何避免这个问题?
+
 操作系统提供的随机端口范围可以通过 `cat /proc/sys/net/ipv4/ip_local_port_range`查看.
 
-该问题产生原因: `Hbase`需要绑定端口正好处于系统提供的随机端口范围内.
+```bash
+$ cat /proc/sys/net/ipv4/ip_local_port_range
+32768	60999
+```
 
-## 解决
+`hbase`使用的端口恰好在这个范围之内. 
 
-先修改系统随机端口范围, 避开`hbase`需要绑定的端口. 然后重启占用`hbase`端口的程序.
+避免此问题复发的方法:
+
+1. 调整`hbase`端口. 有点麻烦 :)
+2. 调整 `ip_local_port_range`范围. 开发环境, 并发要求低, 选这个
 
 ## 修改系统随机端口返回
 
@@ -41,3 +57,8 @@ sysctl -p /etc/sysctl.conf
 ```sh
 cat /proc/sys/net/ipv4/ip_local_port_range
 ```
+
+## tips
+
+写程序时,需要注意linux端口问题. 程序绑定的端口不要在 `ip_local_port_range`之内. 
+
