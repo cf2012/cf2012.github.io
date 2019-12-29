@@ -9,11 +9,13 @@ ssh一般有2种方式认证:
 
 ## 公私钥认证设置方式
 
-使用`ssh-keygen`生成自己的公私钥.(推荐设置密码,加密自己的私钥)
+使用`ssh-keygen`生成自己的公私钥.(推荐设置密码,加密自己的私钥. 长度推荐4096)
 
 ```sh
 ssh-keygen
 ```
+
+详细流程参见: [Generating a new SSH key and adding it to the ssh-agent](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
 生成结果如下:
 
@@ -25,6 +27,9 @@ ssh-keygen
 ```sh
 ssh-copy-id USER@hostname
 ```
+
+> ssh-copy-id 会将公钥写入`USER@hostname`的`~/.ssh/authorized_keys`写. 如果文件不存在,`ssh-copy-id`会自动创建. 
+> 其中, `~/.ssh`权限为`0700`, `~/.ssh/authorized_keys`的权限为`0600`. 如果权限不对,免密登陆会失败.
 
 ## 其它技巧
 
@@ -68,7 +73,22 @@ Host app1
 * Compression  是否压缩
 * ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p  通过代理方式连接. 使用场景: 访问内网服务器
 
+## 遇到的错误
+
+设置之后,还是需要输入密码. 反复设置 .ssh 权限之后, 还是不行.
+
+在sshd的日志中看到:
+
+```log
+Jul  4 11:13:13 localhost sshd[676]: Authentication refused: bad ownership or modes for directory /home/username
+Jul  4 11:13:14 localhost sshd[676]: Accepted password for webapp from ****** port ****** ssh2
+Jul  4 11:13:14 localhost sshd[676]: pam_unix(sshd:session): session opened for user webapp by (uid=0)
+```
+
+原来是用户的home目录modes不对. 执行 chmod 700 /home/username 之后, 问题解决.
+
 ## 参考资料
+
 
 [Using SSH-based Authentication](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-security#sec-SSH)
 
