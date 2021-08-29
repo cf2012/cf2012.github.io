@@ -10,7 +10,9 @@
 
 ### 阶段1. 使用Jenkins插件加shell脚本
 
-整个编译发布过程有以下节点:
+**why**:刚开始使用`Jenkins`. 从网上找教程,跟大牛学习配置流水线. 有些复杂功能用`shell`实现会简单点. 比如: 上传文件到某主机指定目录.然后执行重启操作.
+
+**how**: 整个编译发布过程有以下节点:
 
 * 节点1. 从SCM下载源码
 * 节点2. 代码编译
@@ -29,18 +31,17 @@
 
 ### 阶段2. 使用pipeline功能
 
-**w h y** : 后来公司开始做外部项目,需要配置的东西多.  正好有时间,所以就研究了`pipeline`功能.
+**w h y** : 后来公司开始做外部项目,需要配置的东西多.流行 `Configuration as a code` . 正好有时间,所以就研究了`pipeline`功能.
 
 **how**: 使用 `pipeline`实现了:
 
 - 支持通过[shared-libraries](https://jenkins.io/doc/book/pipeline/shared-libraries/)复用代码
-- 在SCM工具中可以看到历史版本. 方便回退.
-- 方便在不同项目部署Jenkins
+- 在SCM工具中保存了`pipeline`配置,可以看到历史版本. 方便回退. 不用担心`jenkins` 配置丢失了
+- 封装封装... 方便在不同项目部署Jenkins
 
 最终效果:
 
 ```groovy
-
 //file: dev_publish_web_bss.groovy. Jenkins直接调用
 @Library('my_tools') _
 
@@ -51,7 +52,6 @@ projectxxWebDelivery(
 	Job_Desc: "开发环境前端-bss",
 	Deploy_To: "dev",
 )
-
 ```
 
 p.s. 太复杂了.走火入魔的感觉 😓
@@ -73,23 +73,21 @@ p.s. 太复杂了.走火入魔的感觉 😓
 
 p.s. 使用`rundeck`中转的原因:  `rundeck`的权限控制做的比较好
 
+### 反思
 
-
-
-
-参考资料: 
-
-[pipeline getting started](https://www.jenkins.io/doc/book/pipeline/getting-started/)
-
-[Jenkins Best Practices - Practical Continuous Deployment in the Real World ](https://godaddy.github.io/2018/06/05/cicd-best-practices/)
-
-[pipeline shared-libraries](https://jenkins.io/doc/book/pipeline/shared-libraries/)
+`pipeline`功能很强大, 但[阶段2](#阶段2. 使用pipeline功能[)追求功能复用导致新人接手门槛高. 如果再做, 我会采用通过`python`程序用模版生成`pipeline`脚本来实现. 😄
 
 ## 为什么选择 Drone
 
-(动机)
+**w h y**:  使用`golang`编写,比较酷.  配置比`jenkins`的`pipeline`简单易懂. 使用`docker`技术,方便使用`k8s`资源
 
 ## 用Drone 如何解决之前的问题
+
+需要有以下功能:
+
+* 流水线内部支持串行与并行
+* 节点下如果有多个子节点,支持跳过若干个
+* 二次开发能力 & 开发插件简单
 
 ## Drone 架构
 
@@ -101,3 +99,10 @@ p.s. 使用`rundeck`中转的原因:  `rundeck`的权限控制做的比较好
 
 B站视频[【用 Drone 改善團隊自動化測試及部署流程】吳柏毅 (R2-Day1) MOPCON 2018](https://www.bilibili.com/video/BV1H741137Uy?from=search&seid=1300991805432371752)
 
+[pipeline getting started](https://www.jenkins.io/doc/book/pipeline/getting-started/)
+
+[Jenkins Best Practices - Practical Continuous Deployment in the Real World ](https://godaddy.github.io/2018/06/05/cicd-best-practices/)
+
+[pipeline shared-libraries](https://jenkins.io/doc/book/pipeline/shared-libraries/)
+
+## 
