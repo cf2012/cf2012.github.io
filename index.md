@@ -14,15 +14,15 @@
 
 [Linux配置免密登陆](blog/2019/12/28/Linux配置免密登陆.md)
 
+[处理 Alibaba Druid 15分钟超时问题](blog/2021/08/31/troubleshoot-alibaba-druid-timeout-15min.md)
+
 ### Drone笔记
 
 [从`Jenkins`到`drone`](blog/2021/08/29/from-jenkins-to-drone.md), 挖坑
 
 ## k8s 相关
 
-
 ## 工具篇
-
 
 [Git常用操作](blog/2020/06/23/Git常用操作.md)
 
@@ -37,7 +37,6 @@
 集群内如何设置`http`代理?
 
 ## 大数据相关(todo)
-
 
 
 ## 关注的blog
