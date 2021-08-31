@@ -14,7 +14,7 @@
 
 [Linux配置免密登陆](blog/2019/12/28/Linux配置免密登陆.md)
 
-[处理 Alibaba Druid 15分钟超时问题](blog/2021/08/31/troubleshoot-alibaba-druid-timeout-15min.md)
+[处理 Alibaba Druid 15分钟超时问题](blog/2021/08/31/troubleshoot-alibaba-druid-connection-pool-timeout-15min.md)
 
 ### Drone笔记
 
@@ -47,10 +47,6 @@
 
 [有赞技术团队](https://tech.youzan.com/)
 
-
-
-
-
 ## 收藏的文章
 
 Russ Cox关于内存模型的系列
@@ -59,5 +55,4 @@ Russ Cox关于内存模型的系列
 2. 第二篇Programming Language Memory Models [[译]编程语言内存模型](https://colobu.com/2021/07/11/Programming-Language-Memory-Models/)
 3. 第三篇，也是最后一篇: Updating the Go Memory Model [[译]更新Go内存模型](https://colobu.com/2021/07/13/Updating-the-Go-Memory-Model/)
 
-来自[godaddy](https://www.godaddy.com/engineering/)的Jenkins最佳实践: [Jenkins Best Practices - Practical Continuous Deployment in the Real World ](https://godaddy.github.io/2018/06/05/cicd-best-practices/)
-
+来自[godaddy](https://www.godaddy.com/engineering/)的Jenkins最佳实践: [Jenkins Best Practices - Practical Continuous Deployment in the Real World](https://godaddy.github.io/2018/06/05/cicd-best-practices/)
